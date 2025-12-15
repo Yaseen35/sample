@@ -1,369 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quest Master - Login</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quest Master – Login</title>
 
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), inset 0 0 20px rgba(255, 215, 0, 0.1); }
-            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8), inset 0 0 20px rgba(255, 215, 0, 0.2); }
-        }
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#0f3460,#16213e);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+}
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
+.box{
+    background:rgba(0,0,0,.7);
+    padding:2.5rem;
+    border-radius:15px;
+    border:2px solid gold;
+    width:100%;
+    max-width:400px;
+}
 
-        @keyframes slideInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+h1{
+    text-align:center;
+    color:gold;
+    margin-bottom:1rem;
+}
 
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+input{
+    width:100%;
+    padding:.9rem;
+    margin:1rem 0;
+    border-radius:8px;
+    border:1px solid gold;
+    background:#222;
+    color:white;
+}
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
+button{
+    width:100%;
+    padding:1rem;
+    background:gold;
+    border:none;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+}
 
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #fff;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
+button:hover{transform:scale(1.05)}
 
-        .login-container {
-            width: 100%;
-            max-width: 450px;
-            animation: slideInUp 0.6s ease-out;
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            animation: slideInDown 0.6s ease-out;
-        }
-
-        .logo {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .login-header h1 {
-            color: #ffd700;
-            font-size: 2rem;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-            margin-bottom: 0.5rem;
-        }
-
-        .login-header p {
-            color: #b0c4de;
-            font-size: 1rem;
-        }
-
-        .login-box {
-            background: linear-gradient(135deg, rgba(15, 52, 96, 0.8) 0%, rgba(10, 30, 60, 0.8) 100%);
-            border: 2px solid #ffd700;
-            border-radius: 15px;
-            padding: 2.5rem;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-            animation: glow 2s ease-in-out infinite;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            animation: slideInUp 0.6s ease-out;
-        }
-
-        .form-group:nth-child(1) { animation-delay: 0.1s; }
-        .form-group:nth-child(2) { animation-delay: 0.2s; }
-        .form-group:nth-child(3) { animation-delay: 0.3s; }
-        .form-group:nth-child(4) { animation-delay: 0.4s; }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #ffd700;
-            font-weight: bold;
-            font-size: 0.95rem;
-        }
-
-        input {
-            width: 100%;
-            padding: 0.9rem;
-            border: 2px solid #ffd700;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            font-size: 1rem;
-            transition: all 0.3s;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
-        }
-
-        input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        input:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            border-color: #ffed4e;
-        }
-
-        .remember-forgot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-        }
-
-        .remember-forgot a {
-            color: #ffd700;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .remember-forgot a:hover {
-            color: #ffed4e;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-        }
-
-        .remember-forgot label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0;
-            cursor: pointer;
-        }
-
-        .remember-forgot input[type="checkbox"] {
-            width: auto;
-            margin-bottom: 0;
-        }
-
-        .login-button {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #1a1a2e;
-            border: 2px solid #ffd700;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .login-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6);
-        }
-
-        .login-button:active {
-            transform: translateY(-1px);
-        }
-
-        .signup-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: #b0c4de;
-        }
-
-        .signup-link a {
-            color: #ffd700;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .signup-link a:hover {
-            color: #ffed4e;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 2rem 0;
-            color: #ffd700;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #ffd700, transparent);
-        }
-
-        .divider span {
-            padding: 0 1rem;
-            font-size: 0.9rem;
-        }
-
-        .social-login {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .social-button {
-            flex: 1;
-            padding: 0.8rem;
-            background: rgba(255, 215, 0, 0.1);
-            border: 2px solid #ffd700;
-            border-radius: 8px;
-            color: #ffd700;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .social-button:hover {
-            background: rgba(255, 215, 0, 0.2);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .info-banner {
-            background: rgba(76, 175, 80, 0.1);
-            border: 1px solid #4caf50;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            color: #4caf50;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 600px) {
-            .login-box {
-                padding: 2rem;
-            }
-
-            .login-header h1 {
-                font-size: 1.5rem;
-            }
-
-            .logo {
-                font-size: 2.5rem;
-            }
-
-            .social-login {
-                flex-direction: column;
-            }
-        }
-    </style>
+p{text-align:center;margin-top:1rem;color:#aaa}
+</style>
 </head>
+
 <body>
-    <div class="login-container">
-        <div class="login-header">
-            <div class="logo">🎮</div>
-            <h1>QUEST MASTER</h1>
-            <p>Enter the realm of adventure</p>
-        </div>
 
-        <div class="login-box">
-            <div class="info-banner">
-                Demo: Use any email and password to login
-            </div>
+<div class="box">
+<h1>🎮 Quest Master</h1>
+<p>Demo Mode — UI Showcase</p>
 
-            <form onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label for="email">📧 Email Address</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        placeholder="Enter your quest email"
-                        required
-                    >
-                </div>
+<form onsubmit="login(event)">
+<input type="email" placeholder="Email" required>
+<input type="password" placeholder="Password" required>
+<button>⚡ Enter Quest</button>
+</form>
 
-                <div class="form-group">
-                    <label for="password">🔐 Password</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        placeholder="Enter your secret password"
-                        required
-                    >
-                </div>
+<p>New here? Create your hero</p>
+</div>
 
-                <div class="remember-forgot">
-                    <label>
-                        <input type="checkbox" name="remember">
-                        Remember me
-                    </label>
-                    <a href="#forgot">Forgot Password?</a>
-                </div>
+<script>
+function login(e){
+e.preventDefault();
+alert("Login successful!");
+window.location.href="index.html";
+}
+</script>
 
-                <button type="submit" class="login-button">⚡ Enter Quest</button>
-            </form>
-
-            <div class="divider">
-                <span>OR</span>
-            </div>
-
-            <div class="social-login">
-                <button class="social-button" onclick="handleSocialLogin('google')">🔵 Google</button>
-                <button class="social-button" onclick="handleSocialLogin('discord')">💜 Discord</button>
-            </div>
-
-            <div class="signup-link">
-                Don't have an account? <a href="signup.html">Create your hero now!</a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function handleLogin(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const button = event.target.querySelector('.login-button');
-            
-            // Simulate login animation
-            button.style.animation = 'pulse 0.6s ease-in-out';
-            button.textContent = '⏳ Entering Quest...';
-            button.disabled = true;
-            
-            setTimeout(() => {
-                button.textContent = '✅ Welcome, Adventurer!';
-                setTimeout(() => {
-                    // Redirect to index page or dashboard
-                    alert('🎮 Login successful! Welcome to Quest Master, ' + email + '!');
-                    window.location.href = 'index.html';
-                }, 1000);
-            }, 1500);
-        }
-
-        function handleSocialLogin(provider) {
-            alert('🎮 Login with ' + provider.toUpperCase() + ' coming soon!');
-        }
-    </script>
 </body>
 </html>
