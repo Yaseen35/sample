@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quest Master – Register</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);
+    color:white;
+}
+
+.register-box{
+    background:rgba(0,0,0,.75);
+    padding:2.8rem;
+    border-radius:18px;
+    border:2px solid gold;
+    width:100%;
+    max-width:420px;
+    box-shadow:0 0 25px rgba(255,215,0,.4);
+}
+
+.logo{
+    text-align:center;
+    font-size:3rem;
+}
+
+h1{
+    text-align:center;
+    color:gold;
+    margin-bottom:.5rem;
+}
+
+.subtitle{
+    text-align:center;
+    color:#bbb;
+    margin-bottom:2rem;
+}
+
+input{
+    width:100%;
+    padding:1rem;
+    margin:.8rem 0;
+    border-radius:10px;
+    border:1px solid gold;
+    background:#222;
+    color:white;
+    font-size:1rem;
+}
+
+input:focus{
+    outline:none;
+    box-shadow:0 0 10px gold;
+}
+
+button{
+    width:100%;
+    padding:1rem;
+    margin-top:1.2rem;
+    background:gold;
+    border:none;
+    border-radius:12px;
+    font-weight:bold;
+    font-size:1.1rem;
+    cursor:pointer;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.login-link{
+    text-align:center;
+    margin-top:1.5rem;
+    color:#aaa;
+}
+
+.login-link a{
+    color:gold;
+    text-decoration:none;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="register-box">
+    <div class="logo">🛡️</div>
+    <h1>Create Your Hero</h1>
+    <p class="subtitle">Begin your Quest Master journey</p>
+
+    <form onsubmit="register(event)">
+        <input type="text" placeholder="Hero Name" required>
+        <input type="email" placeholder="Email Address" required>
+        <input type="password" placeholder="Password" required>
+        <input type="password" placeholder="Confirm Password" required>
+
+        <button>🚀 Start Adventure</button>
+    </form>
+
+    <div class="login-link">
+        Already have an account?
+        <a href="login.html">Enter Quest</a>
+    </div>
+</div>
+
+<script>
+function register(e){
+    e.preventDefault();
+    alert("🎉 Registration successful! Welcome, Hero!");
+    window.location.href="login.html";
+}
+</script>
+
+</body>
+</html>
