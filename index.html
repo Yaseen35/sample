@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome - Modern Web Page</title>
+    <title>Gamified Adventure - Level Up Your Skills</title>
     <style>
         * {
             margin: 0;
@@ -11,22 +11,55 @@
             box-sizing: border-box;
         }
 
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes countUp {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
         header {
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: rgba(15, 52, 96, 0.95);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
             padding: 1rem 0;
             position: sticky;
             top: 0;
+            z-index: 100;
+            border-bottom: 3px solid #ffd700;
         }
 
         nav {
@@ -39,8 +72,19 @@
         }
 
         nav h2 {
-            color: #667eea;
-            font-size: 1.5rem;
+            color: #ffd700;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .level-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #1a1a2e;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            animation: pulse 2s ease-in-out infinite;
         }
 
         nav ul {
@@ -51,13 +95,25 @@
 
         nav a {
             text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
+            color: #ffd700;
+            font-weight: 700;
+            transition: all 0.3s;
+            position: relative;
         }
 
-        nav a:hover {
-            color: #667eea;
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #ffd700;
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         main {
@@ -69,72 +125,243 @@
         }
 
         .hero {
-            background: white;
-            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(15, 52, 96, 0.5) 100%);
+            border: 3px solid #ffd700;
+            border-radius: 15px;
             padding: 3rem;
             margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
         }
 
         .hero h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 1rem;
-            color: #667eea;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+            position: relative;
+            z-index: 1;
         }
 
         .hero p {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            color: #b0c4de;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #b0c4de;
+            margin-top: 0.5rem;
         }
 
         .cta-button {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 5px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #1a1a2e;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
             text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 800;
+            transition: all 0.3s;
+            border: 2px solid #ffd700;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+        .cta-button:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        .challenges {
+            margin-top: 2rem;
+        }
+
+        .challenges h2 {
+            text-align: center;
             margin-bottom: 2rem;
+            color: #ffd700;
+            font-size: 2rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
         }
 
-        .feature-card {
-            background: white;
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .challenge-card {
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.8) 0%, rgba(10, 30, 60, 0.8) 100%);
+            border: 2px solid #ffd700;
             padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            border-radius: 15px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            animation: slideIn 0.6s ease-out;
         }
 
-        .feature-card:hover {
-            transform: translateY(-5px);
+        .challenge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+            transition: left 0.5s;
         }
 
-        .feature-card h3 {
-            color: #667eea;
+        .challenge-card:hover::before {
+            left: 100%;
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.3);
+            border-color: #ffed4e;
+        }
+
+        .challenge-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .challenge-card h3 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .challenge-card p {
+            color: #b0c4de;
             margin-bottom: 1rem;
         }
 
+        .difficulty {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid #ffd700;
+            color: #ffd700;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .difficulty.easy { background: rgba(76, 175, 80, 0.2); border-color: #4caf50; color: #4caf50; }
+        .difficulty.medium { background: rgba(255, 193, 7, 0.2); border-color: #ffc107; color: #ffc107; }
+        .difficulty.hard { background: rgba(244, 67, 54, 0.2); border-color: #f44336; color: #f44336; }
+
+        .achievement-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(15, 52, 96, 0.3) 100%);
+            border: 2px dashed #ffd700;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .achievement-section h2 {
+            color: #ffd700;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+
+        .achievement-badges {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .badge:hover {
+            transform: scale(1.15) rotate(10deg);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+        }
+
+        .badge-label {
+            position: absolute;
+            bottom: -30px;
+            color: #ffd700;
+            font-size: 0.8rem;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
         footer {
-            background: rgba(0, 0, 0, 0.1);
-            color: white;
+            background: rgba(0, 0, 0, 0.3);
+            color: #b0c4de;
             text-align: center;
             padding: 2rem;
             margin-top: auto;
+            border-top: 2px solid #ffd700;
         }
 
         footer p {
@@ -157,47 +384,178 @@
             .hero {
                 padding: 2rem;
             }
+
+            .stats-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <nav>
-            <h2>MyPage</h2>
+            <h2>🎮 QUEST MASTER</h2>
+            <div class="level-badge">⭐ LEVEL 1</div>
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home">Quest</a></li>
+                <li><a href="#challenges">Challenges</a></li>
+                <li><a href="#achievements">Rewards</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <section class="hero" id="home">
-            <h1>Welcome to My Modern Web Page</h1>
-            <p>Build beautiful, responsive web experiences with clean design and smooth interactions.</p>
-            <a href="#features" class="cta-button">Explore Features</a>
+            <h1>🚀 WELCOME TO YOUR ADVENTURE</h1>
+            <p>Complete challenges, earn achievements, and level up your skills!</p>
+            
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-number" id="points">0</div>
+                    <div class="stat-label">Points</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="streak">0</div>
+                    <div class="stat-label">Streak</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="completed">0</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+            </div>
+
+            <button class="cta-button" onclick="startQuest()">🎯 START QUEST</button>
         </section>
 
-        <section class="features" id="features">
-            <div class="feature-card">
-                <h3>⚡ Fast & Responsive</h3>
-                <p>Optimized performance across all devices. Your page loads quickly and works seamlessly on mobile, tablet, and desktop.</p>
+        <section class="challenges" id="challenges">
+            <h2>⚔️ CHALLENGES AWAIT</h2>
+            <div class="challenge-grid">
+                <div class="challenge-card">
+                    <div class="challenge-icon">💻</div>
+                    <h3>Code Challenge</h3>
+                    <p>Solve 5 coding puzzles to unlock the programming badge!</p>
+                    <div class="difficulty easy">EASY</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">+100 XP</p>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-icon">🎨</div>
+                    <h3>Design Quest</h3>
+                    <p>Create 3 beautiful layouts and impress the design council.</p>
+                    <div class="difficulty medium">MEDIUM</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">+250 XP</p>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-icon">🏆</div>
+                    <h3>Ultimate Battle</h3>
+                    <p>Master all skills and become the champion of the realm!</p>
+                    <div class="difficulty hard">HARD</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">+500 XP</p>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-icon">🌟</div>
+                    <h3>Speed Runner</h3>
+                    <p>Complete 10 tasks in under 60 seconds. Time your reflexes!</p>
+                    <div class="difficulty medium">MEDIUM</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">+200 XP</p>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-icon">🧠</div>
+                    <h3>Brain Teaser</h3>
+                    <p>Solve 20 logic puzzles. Test your mind power!</p>
+                    <div class="difficulty hard">HARD</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">+400 XP</p>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-icon">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Complete daily quests for 7 consecutive days!</p>
+                    <div class="difficulty easy">EASY</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">+150 XP</p>
+                </div>
             </div>
-            <div class="feature-card">
-                <h3>🎨 Modern Design</h3>
-                <p>Contemporary aesthetics with a beautiful gradient background and smooth animations that engage your visitors.</p>
-            </div>
-            <div class="feature-card">
-                <h3>✨ Interactive</h3>
-                <p>Engaging hover effects and transitions provide visual feedback that makes your page feel polished and professional.</p>
+        </section>
+
+        <section class="achievement-section" id="achievements">
+            <h2>🏅 YOUR ACHIEVEMENTS</h2>
+            <div class="achievement-badges">
+                <div class="badge" onclick="unlockBadge(this)">
+                    <span>🥇</span>
+                    <span class="badge-label">First Steps</span>
+                </div>
+                <div class="badge" onclick="unlockBadge(this)">
+                    <span>🔥</span>
+                    <span class="badge-label">On Fire</span>
+                </div>
+                <div class="badge" onclick="unlockBadge(this)">
+                    <span>👑</span>
+                    <span class="badge-label">Champion</span>
+                </div>
+                <div class="badge" onclick="unlockBadge(this)">
+                    <span>💎</span>
+                    <span class="badge-label">Legendary</span>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer id="contact">
-        <p>&copy; 2025 My Website. All rights reserved.</p>
-        <p>Built with HTML, CSS, and passion.</p>
+    <footer>
+        <p>⚡ Quest Master 2025 - May the best adventurer win!</p>
+        <p>Click badges to unlock achievements 🎮</p>
     </footer>
+
+    <script>
+        let stats = {
+            points: 0,
+            streak: 0,
+            completed: 0
+        };
+
+        function startQuest() {
+            stats.points += 50;
+            stats.streak += 1;
+            stats.completed += 1;
+            updateStats();
+            
+            const button = event.target;
+            button.textContent = '✅ QUEST STARTED!';
+            button.style.animation = 'pulse 0.6s ease-in-out';
+            setTimeout(() => {
+                button.textContent = '🎯 START QUEST';
+            }, 1500);
+        }
+
+        function unlockBadge(element) {
+            element.style.animation = 'bounce 0.6s ease-in-out';
+            stats.points += 100;
+            updateStats();
+            
+            const label = element.querySelector('.badge-label');
+            label.style.color = '#4caf50';
+            
+            setTimeout(() => {
+                element.style.animation = '';
+                label.style.color = '#ffd700';
+            }, 600);
+        }
+
+        function updateStats() {
+            document.getElementById('points').textContent = stats.points;
+            document.getElementById('streak').textContent = stats.streak;
+            document.getElementById('completed').textContent = stats.completed;
+        }
+
+        // Animate numbers on load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.challenge-card').forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
 </body>
 </html>
